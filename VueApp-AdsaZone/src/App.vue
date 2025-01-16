@@ -1,23 +1,22 @@
+<!-- Parte del Script-->
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
+import Principal from './components/Principal.vue';
 </script>
 
+<!-- Parte del HTML-->
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
-
   <main>
-    <TheWelcome />
+    <div>
+      <Principal />
+    </div>
   </main>
 </template>
 
+<!-- Parte del CSS-->
 <style scoped>
+
+
+/*
 header {
   line-height: 1.5;
 }
@@ -44,4 +43,5 @@ header {
     flex-wrap: wrap;
   }
 }
+*/
 </style>
