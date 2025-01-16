@@ -39,4 +39,5 @@ a,
 body {
   width: 100vw; /* Ocupa el ancho completo de la ventana */
   height: 100vh; /* Ocupa el alto completo de la ventana */
+  /* overflow: hidden; */
 }
