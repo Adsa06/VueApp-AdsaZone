@@ -17,7 +17,7 @@ const visible = ref(false);
         <Drawer v-model:visible="visible" header="Menu">
             <p></p>
         </Drawer>
-        <Button icon="pi pi-bars" unstyled @click="visible = true" />
+        <Button icon="pi pi-bars" severity="secondary" rounded @click="visible = true" />
     </div>
 </template>
 

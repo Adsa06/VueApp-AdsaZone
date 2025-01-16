@@ -1,7 +1,6 @@
 <!-- Parte del Script-->
 <script setup>
 // Imports
-import ControladorRegistroLogin from './SistemaRegistroLogin/ControladorRegistroLogin.vue';
 import ToolBarPrincipal from './PrefabricadosPrimeVue/ToolBarPrincipal.vue';
 </script>
 
@@ -12,7 +11,6 @@ import ToolBarPrincipal from './PrefabricadosPrimeVue/ToolBarPrincipal.vue';
     </header>
 
     <main>
-        <ControladorRegistroLogin />
     </main>
 </template>
 

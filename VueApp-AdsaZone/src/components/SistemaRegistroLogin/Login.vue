@@ -6,7 +6,7 @@
 
 <!-- Parte del HTML-->
 <template>
-    
+    <p>Estas en Login</p>
 </template>
 
 <!-- Parte del CSS-->

@@ -6,7 +6,7 @@
 
 <!-- Parte del HTML-->
 <template>
-    
+    <p>Estas en Register</p>
 </template>
 
 <!-- Parte del CSS-->

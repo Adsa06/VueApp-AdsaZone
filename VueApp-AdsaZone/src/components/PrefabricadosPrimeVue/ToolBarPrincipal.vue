@@ -3,7 +3,6 @@
 // Imports
 import DrawerPrimeVue from './DrawerPrincipal.vue';
 import Toolbar from 'primevue/toolbar';
-import Button from 'primevue/button';
 import Avatar from 'primevue/avatar';
 
 
