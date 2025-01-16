@@ -1,10 +1,11 @@
 <!-- Parte del Script-->
 <script setup>
 // Imports
+import { ref } from "vue";
+
 import Principal from './components/Principal.vue';
 import ControladorRegistroLogin from './components/SistemaRegistroLogin/ControladorRegistroLogin.vue';
 
-import { ref } from "vue";
 // Variables
 const logged = ref(false);
 </script>

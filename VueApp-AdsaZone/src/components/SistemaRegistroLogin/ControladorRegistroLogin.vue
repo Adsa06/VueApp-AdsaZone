@@ -12,20 +12,22 @@ import Tab from 'primevue/tab';
 import TabPanels from 'primevue/tabpanels';
 import TabPanel from 'primevue/tabpanel';
 
+import Button from "primevue/button";
+
 
 // Variables
-const bRegLog = ref(false);
+const valor = ref("1");
 
 // Funciones
 function ChangeRegLog() {
-    bRegLog.value = !bRegLog.value;
+    valor.value.toString() == '0' ? valor.value = '1' : valor.value = '0';
 }
 </script>
 
-<!-- Parte del HTML-->
+<!-- Parte del HTML -->
 <template>
-    <div class="card">
-        <Tabs value="0">
+    <div class="card ">
+        <Tabs v-model:value="valor" class="Panel">
             <TabList>
                 <Tab value="0">Iniciar Sesion</Tab>
                 <Tab value="1">Registrarse</Tab>
@@ -38,11 +40,25 @@ function ChangeRegLog() {
                     <Register />
                 </TabPanel>
             </TabPanels>
-        </Tabs>
+            <Button style="margin-bottom: 0.25rem;" @click="ChangeRegLog" >Ir a {{ valor.toString() == '0' ? 'Registrarse' : 'Iniciar Sesion'}}</Button> 
+        </Tabs> 
     </div>
 </template>
 
-<!-- Parte del CSS-->
+<!-- Parte del CSS -->
 <style scoped>
+.Panel {
+    margin: 8rem auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 25rem;
+    background-color: #18181b;
+    
+    border: 1px solid #ccc;
+    border-radius: 1rem;
+}
 
 </style>
+
