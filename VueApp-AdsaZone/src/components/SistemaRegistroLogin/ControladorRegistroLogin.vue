@@ -4,7 +4,6 @@
 import { ref } from "vue";
 import Login from './Login.vue';
 import Register from './Register.vue';
-import VerificacionCorreo from './VerificacionCorreo.vue';
 
 import Tabs from 'primevue/tabs';
 import TabList from 'primevue/tablist';
@@ -13,6 +12,8 @@ import TabPanels from 'primevue/tabpanels';
 import TabPanel from 'primevue/tabpanel';
 
 import Button from "primevue/button";
+import Divider from 'primevue/divider';
+
 
 
 // Variables
@@ -26,7 +27,7 @@ function ChangeRegLog() {
 
 <!-- Parte del HTML -->
 <template>
-    <div class="card ">
+    <div class="">
         <Tabs v-model:value="valor" class="Panel">
             <TabList>
                 <Tab value="0">Iniciar Sesion</Tab>
@@ -40,8 +41,12 @@ function ChangeRegLog() {
                     <Register />
                 </TabPanel>
             </TabPanels>
-            <Button style="margin-bottom: 0.25rem;" @click="ChangeRegLog" >Ir a {{ valor.toString() == '0' ? 'Registrarse' : 'Iniciar Sesion'}}</Button> 
-        </Tabs> 
+            <Button @click="ChangeRegLog" >Ir a {{ valor.toString() == '0' ? 'Registrarse' : 'Iniciar Sesion'}}</Button> 
+            <Divider align="center" >
+                <b>O</b>
+            </Divider> 
+            <Button style="margin-bottom: 0.25rem;" label="Continuar con Google" icon="pi pi-google" ></Button>
+        </Tabs>
     </div>
 </template>
 
@@ -61,4 +66,3 @@ function ChangeRegLog() {
 }
 
 </style>
-
