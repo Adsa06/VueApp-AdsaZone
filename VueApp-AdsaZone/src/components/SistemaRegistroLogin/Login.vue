@@ -9,6 +9,8 @@ import Password from 'primevue/password';
 import FloatLabel from 'primevue/floatlabel';
 
 // Variables
+const emit = defineEmits(['logged']);
+
 const password = ref('');
 const email = ref('');
 const userName = ref('');
@@ -39,7 +41,7 @@ const userName = ref('');
                 <label for="on_label_Password">Contraseña</label>
             </FloatLabel>
         </div>
-        <Button>Iniciar sesion</Button>
+        <Button @click="emit('logged')">Iniciar sesion</Button>
     </div>
 </template>
 

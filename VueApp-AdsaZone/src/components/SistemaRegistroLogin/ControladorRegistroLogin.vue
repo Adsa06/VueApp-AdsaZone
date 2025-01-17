@@ -17,7 +17,9 @@ import Divider from 'primevue/divider';
 
 
 // Variables
-const valor = ref("1");
+const emit = defineEmits(['logSuccess']);
+
+const valor = ref("0");
 
 // Funciones
 function ChangeRegLog() {
@@ -35,7 +37,7 @@ function ChangeRegLog() {
             </TabList>
             <TabPanels>
                 <TabPanel value="0">
-                    <Login />
+                    <Login @logged="emit('logSuccess')"/>
                 </TabPanel>
                 <TabPanel value="1">
                     <Register />

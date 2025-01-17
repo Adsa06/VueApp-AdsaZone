@@ -7,14 +7,14 @@ import Principal from './components/Principal.vue';
 import ControladorRegistroLogin from './components/SistemaRegistroLogin/ControladorRegistroLogin.vue';
 
 // Variables
-const logged = ref(false);
+const logged = ref(true);
 </script>
 
 <!-- Parte del HTML-->
 <template>
   <main>
     <div>
-      <ControladorRegistroLogin v-if="!logged" />
+      <ControladorRegistroLogin @logSuccess="logged = true" v-if="!logged" />
       <Principal v-else/>
     </div>
   </main>

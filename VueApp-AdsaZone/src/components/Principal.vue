@@ -2,6 +2,7 @@
 <script setup>
 // Imports
 import ToolBarPrincipal from './PrefabricadosPrimeVue/ToolBarPrincipal.vue';
+import MenuPrincipal from './MenuPrincipal/MenuPrincipal.vue';
 </script>
 
 <!-- Parte del HTML-->
@@ -11,6 +12,7 @@ import ToolBarPrincipal from './PrefabricadosPrimeVue/ToolBarPrincipal.vue';
     </header>
 
     <main>
+        <MenuPrincipal />
     </main>
 </template>
 
