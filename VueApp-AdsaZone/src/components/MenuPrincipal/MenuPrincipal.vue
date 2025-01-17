@@ -62,8 +62,8 @@ function cambiarA(where) {
 <style scoped>
 .Panel {
     display: flex;
-    flex-direction: row;
     flex-wrap: wrap;
+    flex-direction: row;
     gap : 0.5rem;
     margin: 1rem;
 }

@@ -4,12 +4,52 @@
 <script setup>
 // Imports
 import { ref } from "vue";
+
 import Drawer from 'primevue/drawer';
 import Button from 'primevue/button';
 import Avatar from 'primevue/avatar';
+import Menu from 'primevue/menu';
 
 // Variables
+const emit = defineEmits(['toggleView']);
+
 const visible = ref(false);
+
+const items = ref([
+    {
+        label: 'Menu principal',
+        icon: 'pi pi-home',
+        command: () => {
+            emit('toggleView', 'MenuPrincipal');
+            visible.value = false;
+        }
+    },
+    {
+        label: 'Perfil',
+        icon: 'pi pi-user',
+        command: () => {
+            visible.value = false;
+        }
+    },
+    {
+        label: 'Configuracion',
+        icon: 'pi pi-cog',
+        command: () => {
+            visible.value = false;
+        }
+    },
+    {
+        label: 'Lista de tareas',
+        icon: 'pi pi-list',
+        command: () => {
+            emit('toggleView', 'ListaTareas');
+            visible.value = false;
+        }
+    }
+]);
+
+// Funciones
+
 </script>
 
 <!-- Parte del HTML-->
@@ -23,10 +63,12 @@ const visible = ref(false);
                 </div>
             </template>
 
-            <template #default>
+            <template #default>                  
+                <div class="card flex justify-center">
+                    <Menu :model="items">
 
-                <p>Content</p>
-                <Button type="button" @click="visible = false" label="Close" severity="secondary"></Button>
+                    </Menu>
+                </div>
             </template>
 
             <template #footer>
@@ -35,7 +77,7 @@ const visible = ref(false);
                 </div>
             </template>
         </Drawer>
-        <Button icon="pi pi-bars" severity="secondary" rounded @click="visible = true" />
+        <Button icon="pi pi-bars" severity="secondary" rounded @click="visible = true" ></Button>
     </div>
 </template>
 

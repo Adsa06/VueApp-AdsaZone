@@ -30,7 +30,7 @@ function cambiarA(view) {
 <!-- Parte del HTML-->
 <template>
     <header>
-        <ToolBarPrincipal />
+        <ToolBarPrincipal @toggleView="cambiarA"/>
     </header>
 
     <main>

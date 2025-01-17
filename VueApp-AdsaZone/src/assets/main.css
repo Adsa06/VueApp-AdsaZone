@@ -1,5 +1,4 @@
 @import './base.css';
-
 /*
 #app {
   max-width: 1280px;
@@ -37,7 +36,8 @@ a,
 */
 
 body {
-  width: 100vw; /* Ocupa el ancho completo de la ventana */
-  height: 100vh; /* Ocupa el alto completo de la ventana */
+  /* min-width: 99vw; /* Ocupa el ancho completo de la ventana */
+  min-height: 100vh; /* Ocupa el alto completo de la ventana */
+  margin: 0;
   /* overflow: hidden; */
 }
