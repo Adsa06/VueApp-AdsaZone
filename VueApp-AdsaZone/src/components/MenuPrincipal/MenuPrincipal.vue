@@ -4,6 +4,13 @@
 import Card from 'primevue/card';
 import Button from 'primevue/button';
 
+// Variables
+const emit = defineEmits(['toggleView']);
+
+// Funciones
+function cambiarA(where) {
+    emit('toggleView', where);
+}
 </script>
 
 <!-- Parte del HTML-->
@@ -44,7 +51,7 @@ import Button from 'primevue/button';
             </template>
             <template #footer>
                 <div class="flex gap-4 mt-1">
-                    <Button label="Ir a la lista" outlined class="w-full" ></Button>
+                    <Button @click="cambiarA('ListaTareas')" label="Ir a la lista" outlined class="w-full" ></Button>
                 </div>
             </template>
         </Card>
