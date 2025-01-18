@@ -2,6 +2,7 @@
 <script setup>
 // Imports
 import { ref } from "vue";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 import Button from "primevue/button";
 import InputText from 'primevue/inputtext';
@@ -11,10 +12,25 @@ import FloatLabel from 'primevue/floatlabel';
 // Variables
 const emit = defineEmits(['logged']);
 
-const password = ref('');
-const email = ref('');
-const userName = ref('');
+const auth = getAuth();
 
+const email = ref('');
+const password = ref('');
+
+const errorMenssage = ref(false);
+
+// Funciones
+function login(){
+    signInWithEmailAndPassword(auth, email.value, password.value)
+        .then(() => {
+            emit('logged');
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            errorMenssage.value = true;
+        });
+}
 </script>
 
 <!-- Parte del HTML-->
@@ -23,12 +39,6 @@ const userName = ref('');
         <p>Inicia Sesion!</p>
 
         <div class="camposReg">
-            <!-- Nombre de usuario-->
-            <FloatLabel variant="on" class="espaciadoForm Inputs">
-                <InputText id="on_label_user" variant="filled" size="large" v-model="userName" />
-                <label for="on_label_user">Nombre de Usuario</label>
-            </FloatLabel>
-
             <!-- Correo electronico-->
             <FloatLabel variant="on" class="espaciadoForm Inputs">
                 <InputText id="on_label_Email" variant="filled" size="large" v-model="email" />
@@ -40,8 +50,9 @@ const userName = ref('');
                 <Password v-model="password" variant="filled" inputId="on_label_Password" toggleMask :feedback="false"/>
                 <label for="on_label_Password">Contraseña</label>
             </FloatLabel>
+            <p v-if="errorMenssage">El email o la contraseña no son correctos</p>
         </div>
-        <Button @click="emit('logged')">Iniciar sesion</Button>
+        <Button @click="login">Iniciar sesion</Button>
     </div>
 </template>
 

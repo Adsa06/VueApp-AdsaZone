@@ -7,7 +7,7 @@ import Principal from './components/Principal.vue';
 import ControladorRegistroLogin from './components/SistemaRegistroLogin/ControladorRegistroLogin.vue';
 
 // Variables
-const logged = ref(true);
+const logged = ref(false);
 </script>
 
 <!-- Parte del HTML-->
