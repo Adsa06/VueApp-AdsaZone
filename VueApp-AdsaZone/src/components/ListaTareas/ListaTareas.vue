@@ -5,6 +5,7 @@ import { ref } from 'vue';
 import { useConfirm } from "primevue/useconfirm";
 
 import CrearTareas from './CrearTareas.vue';
+import EditarTareas from './EditarTareas.vue';
 
 import Card from 'primevue/card';
 import ToggleSwitch from 'primevue/toggleswitch';
@@ -64,10 +65,13 @@ const checked = ref(false);
                         </p>
                     </div>
                     <Divider />
-                    <div>
+                    <div class="BotonesEliminarEditar">
                         <ConfirmPopup></ConfirmPopup>
                         <div class="card flex flex-wrap gap-2 justify-center">
                             <Button @click="confirm1($event)" label="Eliminar" severity="danger" outlined></Button>
+                        </div>
+                        <div>
+                            <EditarTareas />
                         </div>
                     </div>
                 </template>
@@ -102,6 +106,12 @@ const checked = ref(false);
     word-break: break-word; /* Alternativa para forzar el corte de palabras */
     overflow-wrap: break-word; /* Propiedad recomendada para textos largos */
 
+}
+
+.BotonesEliminarEditar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 </style>
