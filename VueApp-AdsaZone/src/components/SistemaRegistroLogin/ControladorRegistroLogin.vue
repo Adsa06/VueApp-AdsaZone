@@ -40,7 +40,7 @@ function ChangeRegLog() {
                     <Login @logged="emit('logSuccess')"/>
                 </TabPanel>
                 <TabPanel value="1">
-                    <Register />
+                    <Register @registered="ChangeRegLog"/>
                 </TabPanel>
             </TabPanels>
             <Button @click="ChangeRegLog" >Ir a {{ valor.toString() == '0' ? 'Registrarse' : 'Iniciar Sesion'}}</Button> 
