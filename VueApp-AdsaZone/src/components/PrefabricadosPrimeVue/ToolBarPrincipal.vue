@@ -5,7 +5,12 @@ import DrawerPrimeVue from './DrawerPrincipal.vue';
 import Toolbar from 'primevue/toolbar';
 import Avatar from 'primevue/avatar';
 
+import { ref } from "vue";
+import { getAuth } from "firebase/auth";
 
+// Variables
+const auth = getAuth();
+const photoPerfil = ref(auth.currentUser.photoURL);
 </script>
 
 <!-- Parte del HTML-->
@@ -23,7 +28,7 @@ import Avatar from 'primevue/avatar';
 
             <template #end>
                 <div class="flex items-center gap-2 listaObjetos">
-                    <Avatar @click="$emit('toggleView', 'Perfil')" image="https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png" style="width: 32px; height: 32px" />
+                    <Avatar @click="$emit('toggleView', 'Perfil')" :image="photoPerfil" />
                 </div>
             </template>
         </Toolbar>

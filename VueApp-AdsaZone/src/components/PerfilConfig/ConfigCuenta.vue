@@ -32,7 +32,7 @@ import { useToast } from "primevue/usetoast";
 
 
 // Variables
-const emit = defineEmits(['cerrarSesion']);
+const emit = defineEmits(['cerrarSesion', 'actualizarFoto']);
 const toast = useToast();
 
 const name = ref('');
@@ -110,6 +110,7 @@ function borrarCuenta() {    // Borrar los datos personales del usuario
 function actualiarFoto() {
     updateProfile(auth.currentUser, {photoURL: photoPerfil.value})
     .then(() => {
+        emit('actualizarFoto');
         toast.add({ severity: 'success', summary: 'Foto actualizada', detail: 'La foto de perfil ha sido actualizada', life: 3000 });
     })
     .catch((error) => {

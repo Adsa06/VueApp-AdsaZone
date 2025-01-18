@@ -11,6 +11,8 @@ import ConfigCuenta from './PerfilConfig/ConfigCuenta.vue';
 // Variables
 const activeView = ref('MenuPrincipal');
 
+const NavBar = ref(true);
+
 // Computed para determinar el componente activo
 const ActiveComponent = computed(() => {
     switch (activeView.value) {
@@ -31,17 +33,25 @@ const ActiveComponent = computed(() => {
 function cambiarA(view) {
     activeView.value = view;
 }
+
+function actualizarNavBar() {
+    NavBar.value = false; // Actualizas el valor a `false`.
+    setTimeout(() => {
+        NavBar.value = true; // Lo vuelves a `true` después de 100ms.
+    }, 100);
+}
+
 </script>
 
 <!-- Parte del HTML-->
 <template>
     <header>
-        <ToolBarPrincipal @CerrarSesion="$emit('CerrarSesion')" @toggleView="cambiarA"/>
+        <ToolBarPrincipal v-if="NavBar" @CerrarSesion="$emit('CerrarSesion')" @toggleView="cambiarA"/>
     </header>
 
     <main>
         <!-- Esto muestra el componente dependiendo de la variable -->
-        <component :is="ActiveComponent" @toggleView="cambiarA" @CerrarSesion="$emit('CerrarSesion')"/>
+        <component :is="ActiveComponent" @actualizarFoto="actualizarNavBar" @toggleView="cambiarA" @CerrarSesion="$emit('CerrarSesion')"/>
     </main>
 </template>
 
