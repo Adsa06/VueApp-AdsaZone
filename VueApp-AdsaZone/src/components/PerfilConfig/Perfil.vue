@@ -2,6 +2,10 @@
 <script setup>
 // Imports
 import { ref } from "vue";
+import { getAuth } from "firebase/auth";
+
+import { useFirestore } from "vuefire";
+import { collection, getDoc, doc } from "firebase/firestore";
 
 import Fieldset from 'primevue/fieldset';
 import ScrollPanel from 'primevue/scrollpanel';
@@ -10,11 +14,36 @@ import Card from 'primevue/card';
 
 
 // Variables
+
+const auth = getAuth();
+const bbdd = useFirestore();
+
 const name = ref('');
 const photoPerfil = ref('');
 const fechaCreacionCuenta = ref('');
 const edad = ref('');
 const sobreMi = ref('');
+
+// Funciones
+function descargarDatosPersonales() {
+    const DatosRef = collection(bbdd, "/Perfiles/" + auth.currentUser.uid + "/DatosPersonales");
+    const docRef = doc(DatosRef, "Edad");
+    getDoc(docRef)
+    .then((snapshot) => {
+        if (snapshot.exists()) edad.value = snapshot.data().edad;
+    })
+    .catch((error) => {
+        console.error("Error al descargar los datos personales:", error);
+    });
+    const docRef2 = doc(DatosRef, "Comentario");
+    getDoc(docRef2)
+    .then((snapshot) => {
+        if (snapshot.exists()) sobreMi.value = snapshot.data().comentario;
+    })
+    .catch((error) => {
+        console.error("Error al descargar los datos personales:", error);
+    });
+}
 </script>
 
 <!-- Parte del HTML-->
