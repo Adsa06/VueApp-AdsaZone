@@ -128,6 +128,32 @@ function actualizarNombre() {
         toast.add({ severity: 'error', summary: 'Error al actualizar el nombre', detail: 'Error al actualizar el nombre, intentalo mas tarde', life: 3000 });
     });
 }
+
+function cambiarEdad() {
+    const DatosRef = collection(bbdd, "/Perfiles/" + auth.currentUser.uid + "/DatosPersonales");
+    const docRef = doc(DatosRef, "Edad");
+    setDoc(docRef, { edad: edad.value })
+    .then(() => {
+        toast.add({ severity: 'success', summary: 'Edad actualizada', detail: 'La edad de la cuenta ha sido actualizada', life: 3000 });
+    })
+    .catch((error) => {
+        console.log(error);
+        toast.add({ severity: 'error', summary: 'Error al actualizar la edad', detail: 'Error al actualizar la edad, intentalo mas tarde', life: 3000 });
+    });
+}
+
+function cambiarComentario() {
+    const DatosRef = collection(bbdd, "/Perfiles/" + auth.currentUser.uid + "/DatosPersonales");
+    const docRef = doc(DatosRef, "Comentario");
+    setDoc(docRef, { comentario: sobreMi.value })
+    .then(() => {
+        toast.add({ severity: 'success', summary: 'Comentario actualizado', detail: 'El comentario de la cuenta ha sido actualizado', life: 3000 });
+    })
+    .catch((error) => {
+        console.log(error);
+        toast.add({ severity: 'error', summary: 'Error al actualizar el comentario', detail: 'Error al actualizar el comentario, intentalo mas tarde', life: 3000 });
+    });
+}
 </script>
 
 <!-- Parte del HTML-->
@@ -176,7 +202,7 @@ function actualizarNombre() {
                 <p>Cambair la edad de la cuenta</p>
                 <div class="DivEdad">
                     <InputNumber style="width: 5rem;" :max="200" v-model="edad" :useGrouping="false" fluid/>
-                    <Button icon="pi pi-check" severity="success"></Button>
+                    <Button icon="pi pi-check" severity="success" @click="cambiarEdad"></Button>
                 </div>
 
                 <!-- Poder cambiar el sobre mi -->
@@ -184,7 +210,7 @@ function actualizarNombre() {
                 <p>Cambair el sobre mi</p>
                 <div class="DivEdad">
                     <Textarea v-model="sobreMi" autoResize rows="5" cols="60" />
-                    <Button icon="pi pi-check" severity="success"></Button>
+                    <Button icon="pi pi-check" severity="success" @click="cambiarComentario"></Button>
                 </div>                    
             </div>
         </template>
