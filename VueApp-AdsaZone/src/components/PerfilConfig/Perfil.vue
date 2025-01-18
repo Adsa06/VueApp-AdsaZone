@@ -1,7 +1,7 @@
 <!-- Parte del Script-->
 <script setup>
 // Imports
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { getAuth } from "firebase/auth";
 
 import { useFirestore } from "vuefire";
@@ -44,6 +44,10 @@ function descargarDatosPersonales() {
         console.error("Error al descargar los datos personales:", error);
     });
 }
+
+onMounted(() => {
+    descargarDatosPersonales();
+})
 </script>
 
 <!-- Parte del HTML-->
