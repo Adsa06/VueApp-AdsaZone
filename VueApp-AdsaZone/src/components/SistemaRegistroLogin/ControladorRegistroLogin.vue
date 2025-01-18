@@ -10,13 +10,15 @@ import TabList from 'primevue/tablist';
 import Tab from 'primevue/tab';
 import TabPanels from 'primevue/tabpanels';
 import TabPanel from 'primevue/tabpanel';
-
 import Button from "primevue/button";
 import Divider from 'primevue/divider';
 
-
+import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
+import { useFirebaseAuth } from 'vuefire'
 
 // Variables
+const auth = useFirebaseAuth();
+
 const emit = defineEmits(['logSuccess']);
 
 const valor = ref("0");
@@ -24,6 +26,26 @@ const valor = ref("0");
 // Funciones
 function ChangeRegLog() {
     valor.value.toString() == '0' ? valor.value = '1' : valor.value = '0';
+}
+
+function RegistrarseConGoogle() {
+    const provider = new GoogleAuthProvider();
+    signInWithPopup(auth, provider)
+    .then((result) => { // Lo hago de esta forma en vez de llamar a funciones porque con las funciones dan error
+
+        console.log("Usuario creado con éxito.");
+        emit('logSuccess');
+    })
+    .catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+
+        console.log(errorMessage);
+        console.log(errorCode);
+
+        const credential = GoogleAuthProvider.credentialFromError(error);
+    })
 }
 </script>
 
@@ -47,7 +69,7 @@ function ChangeRegLog() {
             <Divider align="center" >
                 <b>O</b>
             </Divider> 
-            <Button style="margin-bottom: 0.25rem;" label="Continuar con Google" icon="pi pi-google" ></Button>
+            <Button style="margin-bottom: 0.25rem;" label="Continuar con Google" icon="pi pi-google" @click="RegistrarseConGoogle"></Button>
         </Tabs>
     </div>
 </template>
