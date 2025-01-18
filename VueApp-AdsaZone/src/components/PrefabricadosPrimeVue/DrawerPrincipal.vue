@@ -71,7 +71,8 @@ function cerrarSesion() {
         <Drawer v-model:visible="visible">
             <template #header>
                 <div class="flex items-center gap-2 contenidoDrawer">
-                    <Avatar image="../../../public/AdsaZoneIcono.jpg" shape="circle" />
+                    <Avatar image="
+https://yt3.googleusercontent.com/ytc/AIdro_ksG0d07eSdW47NTrhyuI3qgm_npiUoLvqUKcM1WYQLEQ=s120-c-k-c0x00ffffff-no-rj" shape="circle" />
                     <span class="font-bold">Menu</span>
                 </div>
             </template>

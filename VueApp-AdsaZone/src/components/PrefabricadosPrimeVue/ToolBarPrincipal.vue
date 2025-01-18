@@ -20,14 +20,14 @@ const photoPerfil = ref(auth.currentUser.photoURL);
             <template #start>
                 <div class="flex items-center gap-2 listaObjetos">
                     <DrawerPrimeVue @CerrarSesion="$emit('CerrarSesion')" @toggleView="$emit('toggleView', $event)"/>
-                    <Avatar image="../../../public/AdsaZoneIcono.jpg" size="large" shape="circle" />
+                    <Avatar image="https://yt3.googleusercontent.com/ytc/AIdro_ksG0d07eSdW47NTrhyuI3qgm_npiUoLvqUKcM1WYQLEQ=s120-c-k-c0x00ffffff-no-rj" size="large" shape="circle" />
                     <h2>Adsa Zone</h2>
                 </div>
             </template>
 
             <template #end>
                 <div class="flex items-center gap-2 listaObjetos">
-                    <Avatar @click="$emit('toggleView', 'Perfil')" :image="photoPerfil" />
+                    <Avatar @click="$emit('toggleView', 'Perfil')" :image="photoPerfil" shape="circle"/>
                 </div>
             </template>
         </Toolbar>
