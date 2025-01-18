@@ -11,19 +11,18 @@ import ToggleSwitch from 'primevue/toggleswitch';
 import Divider from 'primevue/divider';
 import Button from 'primevue/button';
 
-import ConfirmDialog from 'primevue/confirmdialog';
+import ConfirmPopup from 'primevue/confirmpopup';
+
 
 // Variables
 const confirm = useConfirm();
 
 function confirm1() {
     confirm.require({
-        message: '¿Estas seguro de que quieres eliminar esta tarea?',
-        header: 'Zona peligrosa',
+        message: '¿Estas seguro de que quieres eliminar esta tarea? ',
         icon: 'pi pi-info-circle',
-        rejectLabel: 'Cancelar',
         rejectProps: {
-            label: 'Cancel',
+            label: 'Cancelar',
             severity: 'secondary',
             outlined: true
         },
@@ -31,6 +30,7 @@ function confirm1() {
             label: 'Eliminar',
             severity: 'danger'
         },
+
         accept: () => {
             console.log('Accepted');
         },
@@ -45,6 +45,7 @@ const checked = ref(false);
 
 <!-- Parte del HTML-->
 <template>
+    <ConfirmDialog></ConfirmDialog>
     <CrearTareas />
     <Divider />
     <div class="Panel">
@@ -64,9 +65,9 @@ const checked = ref(false);
                     </div>
                     <Divider />
                     <div>
-                        <ConfirmDialog></ConfirmDialog>
+                        <ConfirmPopup></ConfirmPopup>
                         <div class="card flex flex-wrap gap-2 justify-center">
-                            <Button @click="confirm1" label="Eliminar" severity="danger" outlined></Button>
+                            <Button @click="confirm1($event)" label="Eliminar" severity="danger" outlined></Button>
                         </div>
                     </div>
                 </template>
