@@ -36,11 +36,8 @@ const auth = getAuth();
 
 const confirm = useConfirm();
 
-const checked = ref(false);
-
 const arrTareas = ref([]);
-const editarTarea = ref(false);
-const idTareaEditar = ref('');
+const idTareaBorrar = ref('');
 
 // Funciones
 function confirm1() {
@@ -58,13 +55,20 @@ function confirm1() {
         },
 
         accept: () => {
-            console.log('Accepted');
+            borrarTarea();
         },
         reject: () => {
             console.log('Rejected');
         }
     });
 };
+
+function borrarTarea() {
+    const tareasRef = collection(bbdd, "/Perfiles/" + auth.currentUser.uid + "/Tareas");
+    const docRef = doc(tareasRef, idTareaBorrar.value);
+    deleteDoc(docRef);
+    descargarTareasBD();
+}
 
 function alternarTarea(idTarea) {
     const tareasRef = collection(bbdd, "/Perfiles/" + auth.currentUser.uid + "/Tareas");
@@ -127,7 +131,7 @@ onMounted(() => {
                     <div class="BotonesEliminarEditar">
                         <ConfirmPopup></ConfirmPopup>
                         <div class="card flex flex-wrap gap-2 justify-center">
-                            <Button @click="confirm1($event)" label="Eliminar" severity="danger" outlined></Button>
+                            <Button @click="idTareaBorrar = tarea.id; confirm1($event)" label="Eliminar" severity="danger" outlined></Button>
                         </div>
                         <div>
                             <EditarTareas @actualizarTareas="descargarTareasBD" :idTarea = "tarea.id"/>
