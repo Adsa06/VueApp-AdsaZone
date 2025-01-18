@@ -117,6 +117,17 @@ function actualiarFoto() {
         toast.add({ severity: 'error', summary: 'Error al actualizar la foto', detail: 'Error al actualizar la foto, intentalo mas tarde', life: 3000 });
     });
 }
+
+function actualizarNombre() {
+    updateProfile(auth.currentUser, {displayName: name.value})
+    .then(() => {
+        toast.add({ severity: 'success', summary: 'Nombre actualizado', detail: 'El nombre de la cuenta ha sido actualizado', life: 3000 });
+    })
+    .catch((error) => {
+        console.log(error);
+        toast.add({ severity: 'error', summary: 'Error al actualizar el nombre', detail: 'Error al actualizar el nombre, intentalo mas tarde', life: 3000 });
+    });
+}
 </script>
 
 <!-- Parte del HTML-->
@@ -157,7 +168,7 @@ function actualiarFoto() {
                 <p>Cambair nombre de usuario</p>
                 <div class="DivName">
                     <InputText placeholder="Cambair el nombre" v-model="name" />
-                    <Button icon="pi pi-check" severity="success"></Button>
+                    <Button icon="pi pi-check" severity="success" @click="actualizarNombre"></Button>
                 </div>
 
                 <!-- Poder cambiar la edad de la cuenta -->
