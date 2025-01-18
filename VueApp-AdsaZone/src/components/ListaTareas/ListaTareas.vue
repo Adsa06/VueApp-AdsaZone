@@ -108,7 +108,7 @@ onMounted(() => {
 <!-- Parte del HTML-->
 <template>
     <ConfirmDialog></ConfirmDialog>
-    <CrearTareas />
+    <CrearTareas @actualizarTareas="descargarTareasBD" />
     <Divider />
     <div class="Panel">
         <div v-for="tarea in arrTareas" :key="tarea.id" >
