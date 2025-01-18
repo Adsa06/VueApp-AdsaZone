@@ -15,7 +15,7 @@ const logged = ref(false);
   <main>
     <div>
       <ControladorRegistroLogin @logSuccess="logged = true" v-if="!logged" />
-      <Principal v-else/>
+      <Principal @cerrarSesion="logged = false" v-else/>
     </div>
   </main>
 </template>

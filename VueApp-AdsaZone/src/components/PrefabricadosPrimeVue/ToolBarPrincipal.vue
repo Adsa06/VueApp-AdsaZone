@@ -14,7 +14,7 @@ import Avatar from 'primevue/avatar';
         <Toolbar style="border-radius: 3rem; padding: 1rem 1rem 1rem 1rem; margin: 0.5rem">
             <template #start>
                 <div class="flex items-center gap-2 listaObjetos">
-                    <DrawerPrimeVue @toggleView="$emit('toggleView', $event)"/>
+                    <DrawerPrimeVue @CerrarSesion="$emit('CerrarSesion')" @toggleView="$emit('toggleView', $event)"/>
                     <img alt="logo" src="https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png" height="40" class="mr-2" />
 
                     <h2>Adsa Zone</h2>

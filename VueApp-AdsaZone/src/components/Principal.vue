@@ -36,7 +36,7 @@ function cambiarA(view) {
 <!-- Parte del HTML-->
 <template>
     <header>
-        <ToolBarPrincipal @toggleView="cambiarA"/>
+        <ToolBarPrincipal @CerrarSesion="$emit('CerrarSesion')" @toggleView="cambiarA"/>
     </header>
 
     <main>

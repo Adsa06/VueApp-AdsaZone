@@ -4,6 +4,7 @@
 <script setup>
 // Imports
 import { ref } from "vue";
+import { getAuth, signOut } from 'firebase/auth';
 
 import Drawer from 'primevue/drawer';
 import Button from 'primevue/button';
@@ -11,7 +12,9 @@ import Avatar from 'primevue/avatar';
 import Menu from 'primevue/menu';
 
 // Variables
-const emit = defineEmits(['toggleView']);
+const emit = defineEmits(['toggleView', 'CerrarSesion']);
+
+const auth = getAuth();
 
 const visible = ref(false);
 
@@ -51,7 +54,15 @@ const items = ref([
 ]);
 
 // Funciones
-
+function cerrarSesion() {
+    signOut(auth)
+        .then(() => {
+            emit('CerrarSesion');
+        })
+        .catch((error) => {
+            console.log(error)
+        });
+}
 </script>
 
 <!-- Parte del HTML-->
@@ -75,7 +86,7 @@ const items = ref([
 
             <template #footer>
                 <div class="flex items-center gap-2">
-                    <Button label="Logout" icon="pi pi-sign-out" class="flex-auto" severity="danger" text></Button>
+                    <Button @click="cerrarSesion" label="Logout" icon="pi pi-sign-out" class="flex-auto" severity="danger" text></Button>
                 </div>
             </template>
         </Drawer>
