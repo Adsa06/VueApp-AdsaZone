@@ -5,6 +5,8 @@ import { ref, computed } from 'vue';
 import ToolBarPrincipal from './PrefabricadosPrimeVue/ToolBarPrincipal.vue';
 import MenuPrincipal from './MenuPrincipal/MenuPrincipal.vue';
 import ListaTareas from './ListaTareas/ListaTareas.vue';
+import Perfil from './PerfilConfig/Perfil.vue';
+import ConfigCuenta from './PerfilConfig/ConfigCuenta.vue';
 
 // Variables
 const activeView = ref('MenuPrincipal');
@@ -16,6 +18,10 @@ const ActiveComponent = computed(() => {
             return MenuPrincipal;
         case 'ListaTareas':
             return ListaTareas;
+        case 'Perfil':
+            return Perfil;
+        case 'ConfigCuenta':
+            return ConfigCuenta;
         default:
             return MenuPrincipal;
     }

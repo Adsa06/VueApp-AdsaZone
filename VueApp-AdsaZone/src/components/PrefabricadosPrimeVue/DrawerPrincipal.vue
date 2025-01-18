@@ -28,6 +28,7 @@ const items = ref([
         label: 'Perfil',
         icon: 'pi pi-user',
         command: () => {
+            emit('toggleView', 'Perfil');
             visible.value = false;
         }
     },
@@ -35,6 +36,7 @@ const items = ref([
         label: 'Configuracion',
         icon: 'pi pi-cog',
         command: () => {
+            emit('toggleView', 'ConfigCuenta');
             visible.value = false;
         }
     },

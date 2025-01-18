@@ -25,7 +25,7 @@ function cambiarA(where) {
             </template>
             <template #footer>
                 <div class="flex gap-4 mt-1">
-                    <Button label="Ir al perfil" outlined class="w-full" ></Button>
+                    <Button @click="cambiarA('Perfil')" label="Ir al perfil" outlined class="w-full" ></Button>
                 </div>
             </template>
         </Card>
@@ -38,7 +38,7 @@ function cambiarA(where) {
             </template>
             <template #footer>
                 <div class="flex gap-4 mt-1">
-                    <Button label="Ir a la Configuracion" outlined class="w-full" ></Button>
+                    <Button @click="cambiarA('ConfigCuenta')" label="Ir a la Configuracion" outlined class="w-full" ></Button>
                 </div>
             </template>
         </Card>
