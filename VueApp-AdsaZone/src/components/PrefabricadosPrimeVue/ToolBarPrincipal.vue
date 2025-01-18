@@ -20,8 +20,7 @@ const photoPerfil = ref(auth.currentUser.photoURL);
             <template #start>
                 <div class="flex items-center gap-2 listaObjetos">
                     <DrawerPrimeVue @CerrarSesion="$emit('CerrarSesion')" @toggleView="$emit('toggleView', $event)"/>
-                    <img alt="logo" src="https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png" height="40" class="mr-2" />
-
+                    <Avatar image="../../../public/AdsaZoneIcono.jpg" size="large" shape="circle" />
                     <h2>Adsa Zone</h2>
                 </div>
             </template>

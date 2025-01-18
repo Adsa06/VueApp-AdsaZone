@@ -71,7 +71,7 @@ function cerrarSesion() {
         <Drawer v-model:visible="visible">
             <template #header>
                 <div class="flex items-center gap-2 contenidoDrawer">
-                    <Avatar image="https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png" shape="circle" />
+                    <Avatar image="../../../public/AdsaZoneIcono.jpg" shape="circle" />
                     <span class="font-bold">Menu</span>
                 </div>
             </template>
