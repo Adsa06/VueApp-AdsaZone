@@ -29,6 +29,7 @@ import { useToast } from "primevue/usetoast";
 
 
 // Variables
+const emit = defineEmits(['cerrarSesion']);
 const toast = useToast();
 
 const name = ref('');
@@ -38,6 +39,7 @@ const sobreMi = ref('');
 
 const auth = getAuth();
 const bbdd = useFirestore();
+
 // Funciones
 function verificarCorreo() {
     sendEmailVerification(auth.currentUser)
@@ -60,6 +62,47 @@ function restablecerContrasena() {
         toast.add({ severity: 'error', summary: 'Error al enviar el correo', detail: 'Error al enviar el correo, intentalo mas tarde', life: 3000 });
     });
 }
+
+function borrarCuenta() {    // Borrar los datos personales del usuario
+    const DatosRef = collection(bbdd, "/Perfiles/" + auth.currentUser.uid + "/DatosPersonales");
+    getDocs(DatosRef)
+    .then((snapshot) => {
+        let deletePromises = [];
+        snapshot.forEach((doc) => {
+            deletePromises.push(deleteDoc(doc.ref));
+        });
+        return Promise.all(deletePromises); // Asegurarse de que todas las eliminaciones se completen antes de continuar
+    })
+    .catch((error) => {
+        console.log(error);
+    });
+
+    // Borrar las tareas del usuario
+    const TareasRef = collection(bbdd, "/Perfiles/" + auth.currentUser.uid + "/Tareas");
+    getDocs(TareasRef)
+    .then((snapshot) => {
+        let deletePromises = [];
+        snapshot.forEach((doc) => {
+            deletePromises.push(deleteDoc(doc.ref));
+        });
+        return Promise.all(deletePromises);
+    })
+    .catch((error) => {
+        console.log(error);
+    });
+
+    // Borrar la cuenta del usuario
+    deleteUser(auth.currentUser)
+    .then(() => {
+        toast.add({ severity: 'success', summary: 'Cuenta eliminada', detail: 'Tu cuenta y la informacion que tenia ha sido eliminada', life: 3000 });
+        emit('cerrarSesion');
+    })
+    .catch((error) => {
+        console.log(error);
+        toast.add({ severity: 'error', summary: 'Error al eliminar la cuenta', detail: 'Error al eliminar la cuenta, intentalo mas tarde', life: 3000 });
+
+    });
+}
 </script>
 
 <!-- Parte del HTML-->
@@ -80,7 +123,7 @@ function restablecerContrasena() {
 
                 <!-- Boton para cambiar Borrar Cuenta -->
                 <Divider/>
-                <Button label="Borrar Cuenta" severity="secondary" ></Button>
+                <Button label="Borrar Cuenta" severity="secondary" @click="borrarCuenta"></Button>
 
                 <!-- Poder cambiar la foto de perfil -->
                 <Divider/>

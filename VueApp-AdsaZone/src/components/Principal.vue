@@ -41,7 +41,7 @@ function cambiarA(view) {
 
     <main>
         <!-- Esto muestra el componente dependiendo de la variable -->
-        <component :is="ActiveComponent" @toggleView="cambiarA"/>
+        <component :is="ActiveComponent" @toggleView="cambiarA" @CerrarSesion="$emit('CerrarSesion')"/>
     </main>
 </template>
 
