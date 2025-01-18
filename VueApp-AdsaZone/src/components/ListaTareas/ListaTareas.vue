@@ -1,8 +1,21 @@
 <!-- Parte del Script-->
 <script setup>
 // Imports
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useConfirm } from "primevue/useconfirm";
+
+import {
+    collection,
+    getDocs,
+    doc,
+    deleteDoc,
+} from 'firebase/firestore';
+
+import {
+    getAuth,
+} from 'firebase/auth';
+
+import { useFirestore } from 'vuefire';
 
 import CrearTareas from './CrearTareas.vue';
 import EditarTareas from './EditarTareas.vue';
@@ -16,8 +29,18 @@ import ConfirmPopup from 'primevue/confirmpopup';
 
 
 // Variables
+const bbdd = useFirestore();
+const auth = getAuth();
+
 const confirm = useConfirm();
 
+const checked = ref(false);
+
+const arrTareas = ref([]);
+const editarTarea = ref(false);
+const idTareaEditar = ref('');
+
+// Funciones
 function confirm1() {
     confirm.require({
         message: '¿Estas seguro de que quieres eliminar esta tarea? ',
@@ -41,7 +64,28 @@ function confirm1() {
     });
 };
 
-const checked = ref(false);
+function descargarTareasBD() {
+    const tareasRef = collection(bbdd, "/Perfiles/" + auth.currentUser.uid + "/Tareas");
+    getDocs(tareasRef)
+    .then(descargarTareasOK)
+    .catch(descargarTareasNOTOK);
+}
+
+function descargarTareasOK(tareasDescargadas) {
+    arrTareas.value.splice(0,arrTareas.value.length)
+    for(const tarea of tareasDescargadas.docs) {
+        console.log(tarea.id," => ",tarea.data());
+        arrTareas.value.push({id: tarea.id, ...tarea.data()});
+    }
+}
+
+function descargarTareasNOTOK(error) {
+    console.log("ERROR--->>>"+error);
+}
+
+onMounted(() => {
+    descargarTareasBD(); // Esto lo que hara es descargar las tareas
+});
 </script>
 
 <!-- Parte del HTML-->
