@@ -6,6 +6,10 @@ import { ref } from "vue";
 import Card from 'primevue/card';
 import Button from 'primevue/button';
 import Divider from 'primevue/divider';
+import Avatar from 'primevue/avatar';
+import InputText from 'primevue/inputtext';
+import InputNumber from 'primevue/inputnumber';
+import Textarea from 'primevue/textarea';
 
 
 // Variables
@@ -36,13 +40,42 @@ const sobreMi = ref('');
                 <Divider/>
                 <Button label="Borrar Cuenta" severity="secondary" ></Button>
 
-                <!--
-                    Poder cambiar la foto de perfil
-                    Poder cambiar el nombre de la cuenta
-                    Poder cambiar el edad de la cuenta
-                    Poder cambiar el sobre mi
-                -->
-                    
+                <!-- Poder cambiar la foto de perfil -->
+                <Divider/>
+                <div>
+                    <div class="ParteTitulo">
+                        <p>Previsualizacion de la foto</p>
+                        <Button icon="pi pi-check" severity="success"></Button>
+                    </div>
+                    <div class="PreView">
+                        <InputText placeholder="URL de la foto" v-model="photoPerfil" />
+                        <Avatar :image="photoPerfil" shape="circle" size="xlarge" />
+                    </div>
+                </div>
+                
+                <!-- Poder cambiar el nombre de la cuenta -->
+                <Divider/>
+                <p>Cambair nombre de usuario</p>
+                <div class="DivName">
+                    <InputText placeholder="Cambair el nombre" v-model="name" />
+                    <Button icon="pi pi-check" severity="success"></Button>
+                </div>
+
+                <!-- Poder cambiar la edad de la cuenta -->
+                <Divider/>
+                <p>Cambair la edad de la cuenta</p>
+                <div class="DivEdad">
+                    <InputNumber style="width: 5rem;" :max="200" v-model="edad" :useGrouping="false" fluid/>
+                    <Button icon="pi pi-check" severity="success"></Button>
+                </div>
+
+                <!-- Poder cambiar el sobre mi -->
+                <Divider/>
+                <p>Cambair el sobre mi</p>
+                <div class="DivEdad">
+                    <Textarea v-model="sobreMi" autoResize rows="5" cols="60" />
+                    <Button icon="pi pi-check" severity="success"></Button>
+                </div>                    
             </div>
         </template>
     </Card>
@@ -50,5 +83,30 @@ const sobreMi = ref('');
 
 <!-- Parte del CSS-->
 <style scoped>
+.ParteTitulo {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 3.2rem;
+}
+.PreView {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+}
 
+.DivName {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.DivEdad {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+}
 </style>
