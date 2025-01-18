@@ -154,14 +154,13 @@ onMounted(() => {
 }
 .Panel {
     display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    gap : 0.5rem;
-    margin: 1rem;
-    justify-content: center;
+    flex-wrap: wrap; /* Permite que los elementos pasen a la siguiente fila si es necesario */
+    gap: 0.5rem; /* Espacio entre los divs */
+    justify-content: center; /* Centra los elementos horizontalmente */
 }
 
 .Card {
+    flex: 1 1 100px; /* Crece, encoge, y tiene un tamaño base de 100px */
     min-width: 15rem;
     max-width: 20rem; /* Cambia este valor según tus necesidades */
     width: 100%; /* Asegura que se adapten al contenedor */
@@ -170,7 +169,6 @@ onMounted(() => {
     word-wrap: break-word; /* Ajusta palabras largas */
     word-break: break-word; /* Alternativa para forzar el corte de palabras */
     overflow-wrap: break-word; /* Propiedad recomendada para textos largos */
-
 }
 
 .BotonesEliminarEditar {
