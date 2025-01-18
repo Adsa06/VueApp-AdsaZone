@@ -2,6 +2,19 @@
 <script setup>
 // Imports
 import { ref } from "vue";
+import {
+        getAuth,
+        sendEmailVerification,
+        sendPasswordResetEmail,
+        deleteUser,
+} from 'firebase/auth';
+
+import { useFirestore } from 'vuefire';
+import {
+        collection,
+        deleteDoc,
+        getDocs,
+} from 'firebase/firestore';
 
 import Card from 'primevue/card';
 import Button from 'primevue/button';
@@ -18,7 +31,19 @@ const photoPerfil = ref('');
 const edad = ref('');
 const sobreMi = ref('');
 
-
+const auth = getAuth();
+const bbdd = useFirestore();
+// Funciones
+function verificarCorreo() {
+    sendEmailVerification(auth.currentUser)
+    .then(() => {
+        alert("Correo para verificacion enviado");
+    })
+    .catch((error) => {
+        console.log(error);
+        alert("Error al verificar el correo electronico");
+    });
+}
 </script>
 
 <!-- Parte del HTML-->
@@ -29,8 +54,8 @@ const sobreMi = ref('');
             <div>
                 <!-- Boton para verificar perfil -->
                 <Divider/>
-                <P>{{ name ? "El correo esta verificado" : "El correo no esta verificado" }}</P>
-                <Button v-if="!name" label="Verificar el correo" severity="secondary" ></Button>
+                <P>{{ auth.currentUser.emailVerified ? "El correo esta verificado" : "El correo no esta verificado" }}</P>
+                <Button @click="verificarCorreo" v-if="!auth.currentUser.emailVerified" label="Verificar el correo" severity="secondary" ></Button>
 
                 <!-- Boton para cambiar contraseña -->
                 <Divider/>
