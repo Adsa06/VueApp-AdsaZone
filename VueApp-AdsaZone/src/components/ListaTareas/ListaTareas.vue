@@ -9,6 +9,8 @@ import {
     getDocs,
     doc,
     deleteDoc,
+    getDoc, 
+    updateDoc,
 } from 'firebase/firestore';
 
 import {
@@ -64,6 +66,21 @@ function confirm1() {
     });
 };
 
+function alternarTarea(idTarea) {
+    const tareasRef = collection(bbdd, "/Perfiles/" + auth.currentUser.uid + "/Tareas");
+    const docRef = doc(tareasRef, idTarea);
+
+    // Obtener la tarea actual y alternar su estado
+    getDoc(docRef)
+    .then((snapshot) => {
+        const tareaData = snapshot.data();
+        updateDoc(docRef, { finished: !tareaData.finished });
+    })
+    .catch((error) => {
+        console.error("Error al alternar el estado de la tarea:", error);
+    });
+}
+
 function descargarTareasBD() {
     const tareasRef = collection(bbdd, "/Perfiles/" + auth.currentUser.uid + "/Tareas");
     getDocs(tareasRef)
@@ -99,7 +116,7 @@ onMounted(() => {
                 <template #title>
                     <div class="titulo">
                         <p> {{ tarea.title }} </p> 
-                        <ToggleSwitch v-model="tarea.finished" />
+                        <ToggleSwitch v-model="tarea.finished" @change="alternarTarea(tarea.id)" />
                     </div>
                 </template>
                 <template #content>
