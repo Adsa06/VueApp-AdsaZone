@@ -27,17 +27,17 @@ const sobreMi = ref('');
                         <Avatar image="/images/avatar/amyelsner.png" class="mr-2" size="xlarge" shape="circle" />
                         <div class="NameAgeDate">
                             <h1>Adsa</h1>
-                            <h2>17 años</h2>
-                            <h3>18/05/2005</h3>
+                            <h2>Edad del usuario: 17 años</h2>
+                            <h3>Fecha de creacion de la cuenta: 18/05/2005</h3>
                         </div>
                     </div>
                 </template>
             </Card>
         </div>
-        <div class="card">
-            <Fieldset legend="Sobre Mi">
-                <div>
-                    <ScrollPanel style="width: 100%; height: 200px">
+        <div >
+            <Fieldset legend="Sobre Mi" class="SobreMi">
+                <div >
+                    <ScrollPanel style="width: 100%; max-height: 25rem">
                         <p>
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
                             Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
@@ -53,7 +53,8 @@ const sobreMi = ref('');
                         <p class="m-0">
                             Quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non
                             recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat
-                        </p>                    <p>
+                        </p>                    
+                        <p>
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
                             Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                         </p>
@@ -78,6 +79,9 @@ const sobreMi = ref('');
 
 <!-- Parte del CSS-->
 <style scoped>
+.SobreMi {
+    width: 50rem;
+}
 .card {
     width: 50rem;
 }

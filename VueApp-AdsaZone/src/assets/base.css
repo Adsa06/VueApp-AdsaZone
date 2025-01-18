@@ -58,7 +58,6 @@
   margin: 0;
   font-weight: normal;
 }
-
 body {
   min-height: 100vh;
   color: var(--color-text);
@@ -86,3 +85,18 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 */
+body {  
+  font-family:
+    Inter,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    'Fira Sans',
+    'Droid Sans',
+    'Helvetica Neue',
+    sans-serif;
+}

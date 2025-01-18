@@ -70,8 +70,8 @@ function cambiarA(where) {
 
 .Card {
     display: flex;
-    min-width: 15rem;
-    max-width: 15rem;
+    min-width: 18rem;
+    max-width: 18rem;
     height: 10rem;
 
     align-items: center;
