@@ -123,7 +123,7 @@ function borrarCuenta() {    // Borrar los datos personales del usuario
 
                 <!-- Boton para cambiar Borrar Cuenta -->
                 <Divider/>
-                <Button label="Borrar Cuenta" severity="secondary" @click="borrarCuenta"></Button>
+                <Button label="Borrar Cuenta" severity="danger" @click="borrarCuenta"></Button>
 
                 <!-- Poder cambiar la foto de perfil -->
                 <Divider/>
