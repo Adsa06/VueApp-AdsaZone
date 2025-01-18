@@ -23,9 +23,14 @@ import Avatar from 'primevue/avatar';
 import InputText from 'primevue/inputtext';
 import InputNumber from 'primevue/inputnumber';
 import Textarea from 'primevue/textarea';
+import Toast from 'primevue/toast';
+import { useToast } from "primevue/usetoast";
+
 
 
 // Variables
+const toast = useToast();
+
 const name = ref('');
 const photoPerfil = ref('');
 const edad = ref('');
@@ -37,17 +42,29 @@ const bbdd = useFirestore();
 function verificarCorreo() {
     sendEmailVerification(auth.currentUser)
     .then(() => {
-        alert("Correo para verificacion enviado");
+        toast.add({ severity: 'success', summary: 'Correo enviado', detail: 'El correo de verificacion fue enviado', life: 3000 });
     })
     .catch((error) => {
         console.log(error);
-        alert("Error al verificar el correo electronico");
+        toast.add({ severity: 'error', summary: 'Error al enviar el correo', detail: 'Error al enviar el correo, intentalo mas tarde', life: 3000 });
+    });
+}
+
+function restablecerContrasena() {
+    sendPasswordResetEmail(auth, auth.currentUser.email)
+    .then(() => {
+        toast.add({ severity: 'success', summary: 'Correo enviado', detail: 'El correo de restablecimiento de contrasena fue enviado', life: 3000 });
+    })
+    .catch((error) => {
+        console.log(error);
+        toast.add({ severity: 'error', summary: 'Error al enviar el correo', detail: 'Error al enviar el correo, intentalo mas tarde', life: 3000 });
     });
 }
 </script>
 
 <!-- Parte del HTML-->
 <template>
+    <Toast />
     <Card style="margin: 0 1rem;">
         <template #title><i class="pi pi-cog"></i> Configuracion</template>
         <template #content>
@@ -59,7 +76,7 @@ function verificarCorreo() {
 
                 <!-- Boton para cambiar contraseña -->
                 <Divider/>
-                <Button label="Cambiar contraseña" severity="secondary" ></Button>
+                <Button label="Cambiar contraseña" severity="secondary" @click="restablecerContrasena"></Button>
 
                 <!-- Boton para cambiar Borrar Cuenta -->
                 <Divider/>
