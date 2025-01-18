@@ -94,19 +94,17 @@ onMounted(() => {
     <CrearTareas />
     <Divider />
     <div class="Panel">
-        <div v-for="i in 120" :key="i" >
+        <div v-for="tarea in arrTareas" :key="tarea.id" >
             <Card class="Card">
                 <template #title>
                     <div class="titulo">
-                        <p> {{ "Tarea: " + i + " de 10" }} </p> 
-                        <ToggleSwitch v-model="checked" />
+                        <p> {{ tarea.title }} </p> 
+                        <ToggleSwitch v-model="tarea.finished" />
                     </div>
                 </template>
                 <template #content>
                     <div>
-                        <p>
-                            Tarea {{ i }}
-                        </p>
+                        <p>{{ tarea.body }}</p>
                     </div>
                     <Divider />
                     <div class="BotonesEliminarEditar">
@@ -130,6 +128,7 @@ onMounted(() => {
     display: flex;
     align-items: center;
     text-align: center;
+    justify-content: space-between;
     gap: 0.5rem;
 }
 .Panel {
@@ -142,6 +141,7 @@ onMounted(() => {
 }
 
 .Card {
+    min-width: 15rem;
     max-width: 20rem; /* Cambia este valor según tus necesidades */
     width: 100%; /* Asegura que se adapten al contenedor */
     box-sizing: border-box;
