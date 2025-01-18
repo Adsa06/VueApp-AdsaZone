@@ -7,6 +7,7 @@ import {
         sendEmailVerification,
         sendPasswordResetEmail,
         deleteUser,
+        updateProfile,
 } from 'firebase/auth';
 
 import { useFirestore } from 'vuefire';
@@ -14,6 +15,8 @@ import {
         collection,
         deleteDoc,
         getDocs,
+        doc, 
+        setDoc,
 } from 'firebase/firestore';
 
 import Card from 'primevue/card';
@@ -103,6 +106,17 @@ function borrarCuenta() {    // Borrar los datos personales del usuario
 
     });
 }
+
+function actualiarFoto() {
+    updateProfile(auth.currentUser, {photoURL: photoPerfil.value})
+    .then(() => {
+        toast.add({ severity: 'success', summary: 'Foto actualizada', detail: 'La foto de perfil ha sido actualizada', life: 3000 });
+    })
+    .catch((error) => {
+        console.log(error);
+        toast.add({ severity: 'error', summary: 'Error al actualizar la foto', detail: 'Error al actualizar la foto, intentalo mas tarde', life: 3000 });
+    });
+}
 </script>
 
 <!-- Parte del HTML-->
@@ -130,7 +144,7 @@ function borrarCuenta() {    // Borrar los datos personales del usuario
                 <div>
                     <div class="ParteTitulo">
                         <p>Previsualizacion de la foto</p>
-                        <Button icon="pi pi-check" severity="success"></Button>
+                        <Button icon="pi pi-check" severity="success" @click="actualiarFoto"></Button>
                     </div>
                     <div class="PreView">
                         <InputText placeholder="URL de la foto" v-model="photoPerfil" />
