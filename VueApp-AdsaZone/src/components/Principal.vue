@@ -38,7 +38,7 @@ function actualizarNavBar() {
     NavBar.value = false; // Actualizas el valor a `false`.
     setTimeout(() => {
         NavBar.value = true; // Lo vuelves a `true` después de 100ms.
-    }, 100);
+    }, 1);
 }
 
 </script>
