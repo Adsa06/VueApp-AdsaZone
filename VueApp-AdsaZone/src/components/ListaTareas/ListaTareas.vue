@@ -130,7 +130,7 @@ onMounted(() => {
                             <Button @click="confirm1($event)" label="Eliminar" severity="danger" outlined></Button>
                         </div>
                         <div>
-                            <EditarTareas />
+                            <EditarTareas @actualizarTareas="descargarTareasBD" :idTarea = "tarea.id"/>
                         </div>
                     </div>
                 </template>

@@ -2,6 +2,9 @@
 <script setup>
 // Imports
 import { ref } from "vue";
+import { useFirestore } from "vuefire";
+import { collection, setDoc, doc } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
 
 import Dialog from 'primevue/dialog';
 import Button from 'primevue/button';
@@ -10,11 +13,37 @@ import Textarea from 'primevue/textarea';
 import FloatLabel from 'primevue/floatlabel';
 
 // Variables
+const emit = defineEmits(["actualizarTareas"]);
+
+const props = defineProps({
+    idTarea: String,
+});    
+
+const bbdd = useFirestore();
+const auth = getAuth();
+
 const visible = ref(false);
 
 const titulo = ref('');
 const descripcion = ref('');
 
+// Funciones    
+function editartareas(){
+    const TareasRef = collection(bbdd, "/Perfiles/" + auth.currentUser.uid + "/Tareas");
+    const docRef = doc(TareasRef, props.idTarea);
+    setDoc(docRef, { title: titulo.value, body: descripcion.value, finished: false })
+    .then(insertNuevaTareaOk)
+    .catch(insertNuevaTareaFAIL);
+}
+function insertNuevaTareaOk(){
+    titulo.value = '';
+    descripcion.value = '';
+    emit("actualizarTareas");
+    visible.value = false;
+}
+function insertNuevaTareaFAIL(){
+    console.log("Error al insertar");
+}
 </script>
 
 <!-- Parte del HTML-->
@@ -32,7 +61,7 @@ const descripcion = ref('');
             </FloatLabel>
             <div class="BotonCancelarActualizar">
                 <Button type="button" label="Cancelar" severity="secondary" @click="visible = false"></Button>
-                <Button type="button" label="Guardar" @click="visible = false"></Button>
+                <Button type="button" label="Guardar" @click="editartareas"></Button>
             </div>
         </Dialog>
     </div>
