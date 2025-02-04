@@ -1,7 +1,7 @@
 <!-- Parte del Script-->
 <script setup>
 // Imports
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import Login from './Login.vue';
 import Register from './Register.vue';
 
@@ -13,7 +13,7 @@ import TabPanel from 'primevue/tabpanel';
 import Button from "primevue/button";
 import Divider from 'primevue/divider';
 
-import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
+import { GoogleAuthProvider, onAuthStateChanged, signInWithPopup } from 'firebase/auth'
 import { useFirebaseAuth } from 'vuefire'
 
 // Variables
@@ -47,6 +47,16 @@ function RegistrarseConGoogle() {
         const credential = GoogleAuthProvider.credentialFromError(error);
     })
 }
+
+function estadoUsuario(user) {
+    if (user != null) 
+        emit('logSuccess');
+}
+
+onMounted(() => {
+    onAuthStateChanged(auth, estadoUsuario);
+})
+
 </script>
 
 <!-- Parte del HTML -->
