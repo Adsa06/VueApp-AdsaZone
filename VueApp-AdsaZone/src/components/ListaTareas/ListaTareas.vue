@@ -11,6 +11,8 @@ import {
     deleteDoc,
     getDoc,
     updateDoc,
+    query, 
+    where,
 } from 'firebase/firestore';
 
 import {
@@ -30,6 +32,7 @@ import Button from 'primevue/button';
 import InputText from 'primevue/inputtext';
 import IconField from 'primevue/iconfield';
 import InputIcon from 'primevue/inputicon';
+import Select from 'primevue/select';
 
 import ConfirmPopup from 'primevue/confirmpopup';
 
@@ -46,6 +49,12 @@ const idTareaBorrar = ref('');
 const activeSearch = ref(false);
 const valorFilter = ref('');
 
+// Filtros de quary
+const filtroElegida = ref();
+const operadorElegida = ref();
+const filtroTarea = ref(['title', 'body', 'finished']);
+const filtroOperadores = ref(['<', '>', '<=', '>=', '==', '!=', 'array-contains', 'in', 'array-contains-any', 'not-in']);
+const textoFiltrado = ref('');
 // Funciones
 function funcConfirm() {
     confirm.require({
@@ -92,6 +101,25 @@ function alternarTarea(idTarea) {
         });
 }
 
+function descargarTareasFiltradas() {
+    const tareasRef = collection(bbdd, "/Perfiles/" + auth.currentUser.uid + "/Tareas");
+
+    const consulta = query(tareasRef, where('finished', '==',true), where(filtroTarea.value[filtroElegida.value], operadorElegida.value, filtroTareaPor.value));
+
+    getDocs(consulta)
+        .then(descargarTareasOK)
+        .catch(descargarTareasNOTOK);
+}
+
+const opcionElegida = ref();
+const opciones = ref([
+    { name: 'Nada' },
+    { name: 'Tareas completadas' },
+    { name: 'Tareas incompletas' },
+    { name: 'Fecha' },
+    { name: 'Numero' },
+]);
+
 function descargarTareasBD() {
     const tareasRef = collection(bbdd, "/Perfiles/" + auth.currentUser.uid + "/Tareas");
     getDocs(tareasRef)
@@ -118,15 +146,24 @@ onMounted(() => {
 
 <!-- Parte del HTML-->
 <template>
+    <h1> {{ filtroElegida }}</h1>
+    <h1> {{ filtroTarea[filtroElegida] }}</h1>
+    <h1> {{ filtroOperadores[operadorElegida] }}</h1>
+    <h1> {{ filtroTareaPor }}</h1>
     <ConfirmDialog></ConfirmDialog>
     <CrearTareas @actualizarTareas="descargarTareasBD" />
     <Divider />
     <div class="Filtros">
+        <Select v-if="activeSearch" v-model="opcionElegida" :options="opciones" optionLabel="name" placeholder="" />
+        <InputText v-if="activeSearch" v-model="filtroElegida" placeholder="Filtro elegido" />
+        <InputText v-if="activeSearch" v-model="operadorElegida" placeholder="Filtro operador" />
+        <InputText v-if="activeSearch" v-model="filtroTareaPor" placeholder="Filtro operador" />
         <IconField>
             <InputIcon @click="activeSearch = !activeSearch" :class="activeSearch ? 'pi pi-times' : 'pi pi-search'" />
             <InputText v-if="activeSearch" v-model="valorFilter" placeholder="Search" />
         </IconField>
-        <Button v-if="activeSearch" icon="pi pi-search" />
+        <Button v-if="activeSearch" icon="pi pi-search" @click="descargarTareasFiltradas"></Button>
+        <Button v-if="activeSearch" label="Limpiar busqueda" severity="secondary" @click="descargarTareasBD"></Button>
     </div>
     <Divider />
     <div class="Panel">
