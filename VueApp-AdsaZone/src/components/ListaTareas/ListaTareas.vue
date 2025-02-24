@@ -11,7 +11,7 @@ import {
     deleteDoc,
     getDoc,
     updateDoc,
-    query, 
+    query,
     where,
 } from 'firebase/firestore';
 
@@ -33,6 +33,8 @@ import InputText from 'primevue/inputtext';
 import IconField from 'primevue/iconfield';
 import InputIcon from 'primevue/inputicon';
 import Select from 'primevue/select';
+import Dialog from 'primevue/dialog';
+import DatePicker from 'primevue/datepicker';
 
 import ConfirmPopup from 'primevue/confirmpopup';
 
@@ -46,15 +48,36 @@ const confirm = useConfirm();
 const arrTareas = ref([]);
 const idTareaBorrar = ref('');
 
+const opcionElegida = ref({ name: 'Nada' });
+const opciones = ref([
+    { name: 'Nada', id: 0 },
+    { name: 'Tareas completadas', id: 1 },
+    { name: 'Tareas incompletas', id: 2 },
+    { name: 'Fecha', id: 3 },
+    { name: 'Numero', id: 4 },
+]);
+
+const opcionFechaElegida = ref({ cuando: 'Antes del' });
+const opcionesFecha = ref([
+    { cuando: 'Antes del', id: 1 },
+    { cuando: 'Despues del', id: 2 },
+    { cuando: 'El dia', id: 3 },
+]);
+
 const activeSearch = ref(false);
 const valorFilter = ref('');
+const visible = ref(false);
+const date = ref();
+
+const filtradoOpcional = ref('');
 
 // Filtros de quary
 const filtroElegida = ref();
 const operadorElegida = ref();
 const filtroTarea = ref(['title', 'body', 'finished']);
 const filtroOperadores = ref(['<', '>', '<=', '>=', '==', '!=', 'array-contains', 'in', 'array-contains-any', 'not-in']);
-const textoFiltrado = ref('');
+
+
 // Funciones
 function funcConfirm() {
     confirm.require({
@@ -102,23 +125,87 @@ function alternarTarea(idTarea) {
 }
 
 function descargarTareasFiltradas() {
-    const tareasRef = collection(bbdd, "/Perfiles/" + auth.currentUser.uid + "/Tareas");
+    if (valorFilter.value != '' || opcionElegida.value.id != 0) {
+        const tareasRef = collection(bbdd, "/Perfiles/" + auth.currentUser.uid + "/Tareas");
+        let consulta = null;
+        if (opcionElegida.value.id == 0) {
+            consulta = query(tareasRef, where('tags', 'array-contains', valorFilter.value));
+        } else if (valorFilter.value == '') {
+            switch (opcionElegida.value.id) {
+                case 1:
+                    consulta = query(tareasRef, where('finished', '==', true));
+                    break;
 
-    const consulta = query(tareasRef, where('finished', '==',true), where(filtroTarea.value[filtroElegida.value], operadorElegida.value, filtroTareaPor.value));
+                case 2:
+                    consulta = query(tareasRef, where('finished', '==', false));
+                    break;
 
-    getDocs(consulta)
-        .then(descargarTareasOK)
-        .catch(descargarTareasNOTOK);
+                case 3:
+                    if (opcionFechaElegida.value.id === 3) {
+                        // Convierte date.value a objeto Date (asegúrate de que date.value sea un formato reconocible)
+                        const fechaFiltro = new Date(date.value);
+
+                        // Inicio del día (00:00:00)
+                        const inicioDia = new Date(fechaFiltro);
+                        inicioDia.setHours(0, 0, 0, 0);
+
+                        // Fin del día (23:59:59.999)
+                        const finDia = new Date(fechaFiltro);
+                        finDia.setHours(23, 59, 59, 999);
+                        consulta = query(tareasRef, where('date', ">=", inicioDia), where('date', "<=", finDia));
+                    } else {
+                        const operadorFecha = (opcionFechaElegida.value.id === 1) ? '<' : '>';
+                        consulta = query(tareasRef, where('date', operadorFecha, date.value));
+                    }
+                    break;
+
+                case 4:
+                    consulta = query(tareasRef, where());
+                    break;
+                default:
+                    break;
+            }
+        } else {
+            switch (opcionElegida.value.id) {
+                case 1:
+                    consulta = query(tareasRef, where('tags', 'array-contains', valorFilter.value), where('finished', '==', true));
+                    break;
+
+                case 2:
+                    consulta = query(tareasRef, where('tags', 'array-contains', valorFilter.value), where('finished', '==', false));
+                    break;
+
+                case 3:
+                    if (opcionFechaElegida.value.id === 3) {
+                        // Convierte date.value a objeto Date (asegúrate de que date.value sea un formato reconocible)
+                        const fechaFiltro = new Date(date.value);
+
+                        // Inicio del día (00:00:00)
+                        const inicioDia = new Date(fechaFiltro);
+                        inicioDia.setHours(0, 0, 0, 0);
+
+                        // Fin del día (23:59:59.999)
+                        const finDia = new Date(fechaFiltro);
+                        finDia.setHours(23, 59, 59, 999);
+                        consulta = query(tareasRef, where('tags', 'array-contains', valorFilter.value), where('date', ">=", inicioDia), where('date', "<=", finDia));
+                    } else {
+                        const operadorFecha = (opcionFechaElegida.value.id === 1) ? '<' : '>';
+                        consulta = query(tareasRef, where('tags', 'array-contains', valorFilter.value), where('date', operadorFecha, date.value));
+                    }
+                    break;
+
+                case 4:
+                    consulta = query(tareasRef, where('tags', 'array-contains', valorFilter.value), where());
+                    break;
+                default:
+                    break;
+            }
+        }
+        getDocs(consulta)
+            .then(descargarTareasOK)
+            .catch(descargarTareasNOTOK);
+    }
 }
-
-const opcionElegida = ref();
-const opciones = ref([
-    { name: 'Nada' },
-    { name: 'Tareas completadas' },
-    { name: 'Tareas incompletas' },
-    { name: 'Fecha' },
-    { name: 'Numero' },
-]);
 
 function descargarTareasBD() {
     const tareasRef = collection(bbdd, "/Perfiles/" + auth.currentUser.uid + "/Tareas");
@@ -131,12 +218,16 @@ function descargarTareasOK(tareasDescargadas) {
     arrTareas.value.splice(0, arrTareas.value.length)
     for (const tarea of tareasDescargadas.docs) {
         console.log(tarea.id, " => ", tarea.data());
-        arrTareas.value.push({ id: tarea.id, ...tarea.data() });
+        arrTareas.value.push({ id: tarea.id, ...tarea.data(), date: tarea.data().date.toDate()?.toLocaleDateString("es-ES") });
     }
 }
 
 function descargarTareasNOTOK(error) {
     console.log("ERROR--->>>" + error);
+}
+
+function resetDialog() {
+    visible.value = false;
 }
 
 onMounted(() => {
@@ -146,18 +237,33 @@ onMounted(() => {
 
 <!-- Parte del HTML-->
 <template>
-    <h1> {{ filtroElegida }}</h1>
-    <h1> {{ filtroTarea[filtroElegida] }}</h1>
-    <h1> {{ filtroOperadores[operadorElegida] }}</h1>
-    <h1> {{ filtroTareaPor }}</h1>
     <ConfirmDialog></ConfirmDialog>
     <CrearTareas @actualizarTareas="descargarTareasBD" />
     <Divider />
-    <div class="Filtros">
-        <Select v-if="activeSearch" v-model="opcionElegida" :options="opciones" optionLabel="name" placeholder="" />
+    <Dialog v-model:visible="visible" modal header="Elige filtros adicionales" :style="{ width: '25rem' }">
+        <div class="contenidoFiltrado">
+            <Select v-model="opcionElegida" :options="opciones" optionLabel="name" placeholder="" />
+            <div v-if="opcionElegida.name == 'Tareas completadas'" class="contenedorFiltrado">
+                <p>Solo se mostraran las tareas completadas</p>
+            </div>
+            <div v-if="opcionElegida.name == 'Tareas incompletas'" class="contenedorFiltrado">
+                <p>Solo se mostraran las tareas incompletadas</p>
+            </div>
+            <div v-if="opcionElegida.name == 'Fecha'" class="contenedorFiltrado">
+                <p>Solo se mostraran las fechas que se crearon:</p>
+                <Select v-model="opcionFechaElegida" :options="opcionesFecha" optionLabel="cuando" placeholder="" />
+                <DatePicker v-model="date" />
+            </div>
+            <div class="flex justify-end gap-2">
+                <Button type="button" label="Guardar" @click="resetDialog"></Button>
+            </div>
+        </div>
+    </Dialog>
+    <div class="Filtros"><!-- 
         <InputText v-if="activeSearch" v-model="filtroElegida" placeholder="Filtro elegido" />
         <InputText v-if="activeSearch" v-model="operadorElegida" placeholder="Filtro operador" />
-        <InputText v-if="activeSearch" v-model="filtroTareaPor" placeholder="Filtro operador" />
+        <InputText v-if="activeSearch" v-model="filtroTareaPor" placeholder="Filtro operador" />-->
+        <Button v-if="activeSearch" icon="pi pi-filter" @click="visible = true"></Button>
         <IconField>
             <InputIcon @click="activeSearch = !activeSearch" :class="activeSearch ? 'pi pi-times' : 'pi pi-search'" />
             <InputText v-if="activeSearch" v-model="valorFilter" placeholder="Search" />
@@ -179,6 +285,9 @@ onMounted(() => {
                     <div>
                         <p>{{ tarea.body }}</p>
                     </div>
+                    <div>
+                        <p>{{ tarea.date }}</p>
+                    </div>
                     <Divider />
                     <div class="BotonesEliminarEditar">
                         <ConfirmPopup></ConfirmPopup>
@@ -198,6 +307,17 @@ onMounted(() => {
 
 <!-- Parte del CSS-->
 <style scoped>
+.contenedorFiltrado {
+    display: flex;
+    flex-direction: column;
+}
+
+.contenidoFiltrado {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
 .Filtros {
     min-height: 2.5rem;
     display: flex;

@@ -3,7 +3,7 @@
 // Imports
 import { ref } from "vue";
 import { useFirestore } from "vuefire";
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 
 import Textarea from 'primevue/textarea';
@@ -21,9 +21,21 @@ const titulo = ref('');
 const descripcion = ref('');
 
 // Funciones
+function convertirATags(texto) {
+    // Eliminar comas y otros caracteres no deseados y dividir en palabras
+    return texto.replace(/,/g, '').split(' ').filter(Boolean);
+}
 function addTarea() {
     const TareasRef = collection(bbdd, "/Perfiles/" + auth.currentUser.uid + "/Tareas");
-    addDoc(TareasRef,{ title: titulo.value, body: descripcion.value, finished: false })
+
+    // Convertir titulo y descripcion en arrays de palabras
+    const tagsTitulo = convertirATags(titulo.value);
+    const tagsDescripcion = convertirATags(descripcion.value);
+
+    // Concatenar ambos arrays para que los tags incluyan las palabras de ambos campos
+    const allTags = [...tagsTitulo, ...tagsDescripcion];
+
+    addDoc(TareasRef,{ title: titulo.value, body: descripcion.value, finished: false, date: serverTimestamp(), tags:  allTags})
     .then(insertNuevaTareaOk)
     .catch(insertNuevaTareaFAIL);
 }
