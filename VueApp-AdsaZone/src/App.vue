@@ -6,9 +6,6 @@ import { useRouter } from 'vue-router';
 import { onAuthStateChanged } from 'firebase/auth'
 import { useFirebaseAuth } from 'vuefire'
 
-import Principal from './components/Principal.vue';
-import ControladorRegistroLogin from './components/SistemaRegistroLogin/ControladorRegistroLogin.vue';
-
 // Variables
 const auth = useFirebaseAuth();
 
@@ -31,11 +28,6 @@ onMounted(() => {
 <template>
   <main>
     <RouterView />
-    <!-- 
-    <div>
-      <ControladorRegistroLogin @logSuccess="logged = true" v-if="!logged" />
-      <Principal @cerrarSesion="logged = false" v-else/>
-    </div>-->
   </main>
 </template>
 

@@ -32,7 +32,7 @@ import { useRouter } from 'vue-router';
 
 
 // Variables
-const emit = defineEmits(['cerrarSesion', 'actualizarFoto']);
+const emit = defineEmits(['actualizarFoto']);
 const toast = useToast();
 
 const name = ref('');
