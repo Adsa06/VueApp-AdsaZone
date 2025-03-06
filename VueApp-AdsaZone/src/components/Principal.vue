@@ -9,31 +9,9 @@ import Perfil from './PerfilConfig/Perfil.vue';
 import ConfigCuenta from './PerfilConfig/ConfigCuenta.vue';
 
 // Variables
-const activeView = ref('MenuPrincipal');
-
 const NavBar = ref(true);
 
-// Computed para determinar el componente activo
-const ActiveComponent = computed(() => {
-    switch (activeView.value) {
-        case 'MenuPrincipal':
-            return MenuPrincipal;
-        case 'ListaTareas':
-            return ListaTareas;
-        case 'Perfil':
-            return Perfil;
-        case 'ConfigCuenta':
-            return ConfigCuenta;
-        default:
-            return MenuPrincipal;
-    }
-});
-
 // Funciones
-function cambiarA(view) {
-    activeView.value = view;
-}
-
 function actualizarNavBar() {
     NavBar.value = false; // Actualizas el valor a `false`.
     setTimeout(() => {
@@ -46,12 +24,15 @@ function actualizarNavBar() {
 <!-- Parte del HTML-->
 <template>
     <header>
-        <ToolBarPrincipal v-if="NavBar" @CerrarSesion="$emit('CerrarSesion')" @toggleView="cambiarA"/>
+        <ToolBarPrincipal v-if="NavBar"/>
     </header>
 
     <main>
+        <RouterView />
         <!-- Esto muestra el componente dependiendo de la variable -->
+         <!--
         <component :is="ActiveComponent" @actualizarFoto="actualizarNavBar" @toggleView="cambiarA" @CerrarSesion="$emit('CerrarSesion')"/>
+        -->
     </main>
 </template>
 

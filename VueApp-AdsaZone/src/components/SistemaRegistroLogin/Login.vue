@@ -3,6 +3,7 @@
 // Imports
 import { ref } from "vue";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { useRouter } from 'vue-router';
 
 import Button from "primevue/button";
 import InputText from 'primevue/inputtext';
@@ -10,8 +11,6 @@ import Password from 'primevue/password';
 import FloatLabel from 'primevue/floatlabel';
 
 // Variables
-const emit = defineEmits(['logged']);
-
 const auth = getAuth();
 
 const email = ref('');
@@ -19,11 +18,12 @@ const password = ref('');
 
 const errorMenssage = ref(false);
 
+const router = useRouter();
 // Funciones
 function login(){
     signInWithEmailAndPassword(auth, email.value, password.value)
         .then(() => {
-            emit('logged');
+            router.push('/home');
         })
         .catch((error) => {
             const errorCode = error.code;

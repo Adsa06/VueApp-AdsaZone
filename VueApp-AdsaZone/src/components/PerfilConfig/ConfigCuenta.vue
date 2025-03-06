@@ -28,7 +28,7 @@ import InputNumber from 'primevue/inputnumber';
 import Textarea from 'primevue/textarea';
 import Toast from 'primevue/toast';
 import { useToast } from "primevue/usetoast";
-
+import { useRouter } from 'vue-router';
 
 
 // Variables
@@ -42,6 +42,8 @@ const sobreMi = ref('');
 
 const auth = getAuth();
 const bbdd = useFirestore();
+
+const router = useRouter();
 
 // Funciones
 function verificarCorreo() {
@@ -98,7 +100,7 @@ function borrarCuenta() {    // Borrar los datos personales del usuario
     deleteUser(auth.currentUser)
     .then(() => {
         toast.add({ severity: 'success', summary: 'Cuenta eliminada', detail: 'Tu cuenta y la informacion que tenia ha sido eliminada', life: 3000 });
-        emit('cerrarSesion');
+        router.push('/');
     })
     .catch((error) => {
         console.log(error);

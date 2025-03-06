@@ -1,7 +1,8 @@
 <!-- Parte del Script-->
 <script setup>
 // Imports
-import { ref, onMounted } from "vue";
+import { ref } from "vue";
+import { useRouter } from 'vue-router';
 import Login from './Login.vue';
 import Register from './Register.vue';
 
@@ -13,16 +14,15 @@ import TabPanel from 'primevue/tabpanel';
 import Button from "primevue/button";
 import Divider from 'primevue/divider';
 
-import { GoogleAuthProvider, onAuthStateChanged, signInWithPopup } from 'firebase/auth'
+import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
 import { useFirebaseAuth } from 'vuefire'
 
 // Variables
 const auth = useFirebaseAuth();
 
-const emit = defineEmits(['logSuccess']);
-
 const valor = ref("0");
 
+const router = useRouter();
 // Funciones
 function ChangeRegLog() {
     valor.value.toString() == '0' ? valor.value = '1' : valor.value = '0';
@@ -34,7 +34,7 @@ function RegistrarseConGoogle() {
     .then((result) => { // Lo hago de esta forma en vez de llamar a funciones porque con las funciones dan error
 
         console.log("Usuario creado con éxito.");
-        emit('logSuccess');
+        router.push('/home');
     })
     .catch((error) => {
         // Handle Errors here.
@@ -48,15 +48,6 @@ function RegistrarseConGoogle() {
     })
 }
 
-function estadoUsuario(user) {
-    if (user != null) 
-        emit('logSuccess');
-}
-
-onMounted(() => {
-    onAuthStateChanged(auth, estadoUsuario);
-})
-
 </script>
 
 <!-- Parte del HTML -->
@@ -69,10 +60,10 @@ onMounted(() => {
             </TabList>
             <TabPanels>
                 <TabPanel value="0">
-                    <Login @logged="emit('logSuccess')"/>
+                    <Login />
                 </TabPanel>
                 <TabPanel value="1">
-                    <Register @registered="ChangeRegLog"/>
+                    <Register />
                 </TabPanel>
             </TabPanels>
             <Button @click="ChangeRegLog" >Ir a {{ valor.toString() == '0' ? 'Registrarse' : 'Iniciar Sesion'}}</Button> 

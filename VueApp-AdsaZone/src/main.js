@@ -14,6 +14,8 @@ import Aura from '@primevue/themes/aura';
 import ConfirmationService from 'primevue/confirmationservice';
 import ToastService from 'primevue/toastservice';
 
+import router from './router';
+
 const app = createApp(App)
 
 app.use(VueFire, {
@@ -32,5 +34,7 @@ app.use(PrimeVue, {
 });
 app.use(ConfirmationService);
 app.use(ToastService);
+
+app.use(router);
 
 app.mount('#app')

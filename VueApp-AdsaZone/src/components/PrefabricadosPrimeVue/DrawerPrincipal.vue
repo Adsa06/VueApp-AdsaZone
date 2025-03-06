@@ -5,6 +5,7 @@
 // Imports
 import { ref } from "vue";
 import { getAuth, signOut } from 'firebase/auth';
+import { useRouter } from 'vue-router';
 
 import Drawer from 'primevue/drawer';
 import Button from 'primevue/button';
@@ -12,18 +13,19 @@ import Avatar from 'primevue/avatar';
 import Menu from 'primevue/menu';
 
 // Variables
-const emit = defineEmits(['toggleView', 'CerrarSesion']);
 
 const auth = getAuth();
 
 const visible = ref(false);
+
+const router = useRouter();
 
 const items = ref([
     {
         label: 'Menu principal',
         icon: 'pi pi-home',
         command: () => {
-            emit('toggleView', 'MenuPrincipal');
+            router.push('/home');
             visible.value = false;
         }
     },
@@ -31,7 +33,7 @@ const items = ref([
         label: 'Perfil',
         icon: 'pi pi-user',
         command: () => {
-            emit('toggleView', 'Perfil');
+            router.push('/profile');
             visible.value = false;
         }
     },
@@ -39,7 +41,7 @@ const items = ref([
         label: 'Configuracion',
         icon: 'pi pi-cog',
         command: () => {
-            emit('toggleView', 'ConfigCuenta');
+            router.push('/config');
             visible.value = false;
         }
     },
@@ -47,7 +49,7 @@ const items = ref([
         label: 'Lista de tareas',
         icon: 'pi pi-list',
         command: () => {
-            emit('toggleView', 'ListaTareas');
+            router.push('/task-list');
             visible.value = false;
         }
     }
@@ -57,7 +59,7 @@ const items = ref([
 function cerrarSesion() {
     signOut(auth)
         .then(() => {
-            emit('CerrarSesion');
+            router.push('/');
         })
         .catch((error) => {
             console.log(error)

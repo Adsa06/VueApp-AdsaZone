@@ -5,13 +5,16 @@ import { ref } from "vue";
 import { createUserWithEmailAndPassword } from 'firebase/auth'
 import { useFirebaseAuth } from 'vuefire'
 import { getAuth, updateProfile } from "firebase/auth";
+import { useRouter } from 'vue-router';
 
 import Button from "primevue/button";
 import InputText from 'primevue/inputtext';
 import Password from 'primevue/password';
 import FloatLabel from 'primevue/floatlabel';
 
-// Variables    
+// Variables
+const router = useRouter();
+
 const errorMenssageRePassword = ref(false);
 const errorMenssageLongPassword = ref(false);
 const errorMenssageEmail = ref(false);
@@ -19,8 +22,6 @@ const errorMenssageUserName = ref(false);
 
 const auth = useFirebaseAuth();
 const getAuthActual = getAuth();
-
-const emit = defineEmits(['registered']);
 
 const password = ref('');
 const repassword = ref('');
@@ -52,7 +53,7 @@ function register(){
             console.log("Usuario creado con éxito.");
             updateProfile(getAuthActual.currentUser, {displayName: userName.value})
             .then(() => {
-                emit('registered');
+                router.push('/home');
             })
             .catch((error) => {
                 console.log("Error al actualizar el perfil: " + error);

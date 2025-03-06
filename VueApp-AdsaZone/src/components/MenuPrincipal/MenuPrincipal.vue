@@ -3,14 +3,13 @@
 // Imports
 import Card from 'primevue/card';
 import Button from 'primevue/button';
+import { useRouter } from 'vue-router';
 
 // Variables
-const emit = defineEmits(['toggleView']);
+const router = useRouter();
 
 // Funciones
-function cambiarA(where) {
-    emit('toggleView', where);
-}
+
 </script>
 
 <!-- Parte del HTML-->
@@ -25,7 +24,7 @@ function cambiarA(where) {
             </template>
             <template #footer>
                 <div class="flex gap-4 mt-1">
-                    <Button @click="cambiarA('Perfil')" label="Ir al perfil" outlined class="w-full" ></Button>
+                    <Button @click="router.push('/profile')" label="Ir al perfil" outlined class="w-full" ></Button>
                 </div>
             </template>
         </Card>
@@ -38,7 +37,7 @@ function cambiarA(where) {
             </template>
             <template #footer>
                 <div class="flex gap-4 mt-1">
-                    <Button @click="cambiarA('ConfigCuenta')" label="Ir a la Configuracion" outlined class="w-full" ></Button>
+                    <Button @click="router.push('/config')" label="Ir a la Configuracion" outlined class="w-full" ></Button>
                 </div>
             </template>
         </Card>
@@ -51,7 +50,7 @@ function cambiarA(where) {
             </template>
             <template #footer>
                 <div class="flex gap-4 mt-1">
-                    <Button @click="cambiarA('ListaTareas')" label="Ir a la lista" outlined class="w-full" ></Button>
+                    <Button @click="router.push('/task-list')" label="Ir a la lista" outlined class="w-full" ></Button>
                 </div>
             </template>
         </Card>
