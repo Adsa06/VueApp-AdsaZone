@@ -3,6 +3,7 @@
 // Imports
 import { ref } from 'vue';
 import ToolBarPrincipal from './PrefabricadosPrimeVue/ToolBarPrincipal.vue';
+import Paypal from './Paypal.vue';
 
 // Variables
 const NavBar = ref(true);
@@ -20,9 +21,9 @@ function actualizarNavBar() {
 <!-- Parte del HTML-->
 <template>
     <header>
-        <ToolBarPrincipal v-if="NavBar"/>
+       <!-- <ToolBarPrincipal v-if="NavBar"/>--> 
     </header>
-
+    <Paypal></Paypal>
     <main>
         <RouterView @actualizarFoto="actualizarNavBar" />
     </main>
