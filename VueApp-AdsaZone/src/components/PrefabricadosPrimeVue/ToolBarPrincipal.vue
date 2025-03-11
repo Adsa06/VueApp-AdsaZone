@@ -7,14 +7,24 @@ import Avatar from 'primevue/avatar';
 
 import { useRouter } from 'vue-router';
 
-import { ref } from "vue";
-import { getAuth } from "firebase/auth";
+import { onMounted, ref } from "vue";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 // Variables
 const auth = getAuth();
-const photoPerfil = ref(auth.currentUser.photoURL);
+const photoPerfil = ref('');
 
 const router = useRouter();
+
+//Funciones
+function estadoUsuario(user) {
+    if (user != null)
+        photoPerfil.value = user.photoURL;
+}
+
+onMounted(() => {
+    onAuthStateChanged(auth, estadoUsuario);
+})
 </script>
 
 <!-- Parte del HTML-->

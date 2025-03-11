@@ -54,6 +54,19 @@ const router = useRouter();
                 </div>
             </template>
         </Card>
+        <Card class="Card">
+            <template #title>Tienda</template>
+            <template #content>
+                <p class="m-0">
+                    Tienda personalizada
+                </p>
+            </template>
+            <template #footer>
+                <div class="flex gap-4 mt-1">
+                    <Button @click="router.push('/shop')" label="Ir a la tienda" outlined class="w-full" ></Button>
+                </div>
+            </template>
+        </Card>
     </div>
 </template>
 
