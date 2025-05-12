@@ -33,6 +33,11 @@ function login(){
 }
 </script>
 
+<form action="insertar.php" method="POST">
+    
+
+</form>
+
 <!-- Parte del HTML-->
 <template>
     <div class="formularioReg">
