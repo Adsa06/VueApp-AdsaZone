@@ -1,6 +1,6 @@
 <?php
 require_once 'DbConnection.php';
-echo "Hola";
+echo "Hola2, ¿q tal?";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (isset($_POST['username']) && isset($_POST['password'])) {
@@ -15,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $conn = $db->connect();
 
 
-        $sql = "INSERT INTO usuarios (nombre, contrasena) VALUES (?, ?)";
+        $sql = "INSERT INTO usuarios (username , password) VALUES (?, ?)";
         $stmt = $conn->prepare($sql);
 
         if ($stmt) {

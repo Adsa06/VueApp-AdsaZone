@@ -1,15 +1,17 @@
 <?php
 class DbConnection {
-    private $host = "localhost:3307";
+    private $host = "localhost";
     private $username = "root";
-    private $password = "Password1234";
+    private $password = "";
     private $database = "adsaworlddb";
-    private $conn;
+    private $conn = null;
 
     public function connect() {
-        $this->conn = new mysqli($this->host, $this->username, $this->password, $this->database);
+        $this->conn = new mysqli("localhost", "root", "", "adsaworlddb", "3306");
         if ($this->conn->connect_error) {
-            die("Connection failed: " . $this->conn->connect_error);
+            die("❌ Falló la conexión: " . $this->conn->connect_error);
+        } else {
+            echo "✅ Conexión exitosa a MySQL!";
         }
         return $this->conn;
     }
